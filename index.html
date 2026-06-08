@@ -1,6 +1,221 @@
 <!DOCTYPE html>
 <html>
+<style>
+table, th, td {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+</style>
 <body>
-Hello, Leo!
+	<p>
+	<table>
+		<tr>
+			<th></th>
+			<th>Rot</th>
+			<th>Grün</th>
+			<th>Blau</th>
+			<th>code</th>
+			<th></th>
+		</tr>
+		<tr>
+			<th>Wand</th>
+			<td><input oninput="changeWallColorRed(this.value)" onchange="changeWallColorRed(this.value)" type="range"
+					id="slideWallRed" min="0" max="255"></td>
+			<td><input oninput="changeWallColorGreen(this.value)" onchange="changeWallColorGreen(this.value)"
+					type="range" id="slideWallGreen" min="0" max="255"></td>
+			<td><input oninput="changeWallColorBlue(this.value)" onchange="changeWallColorBlue(this.value)" type="range"
+					id="slideWallBlue" min="0" max="255"></td>
+			<td></td>
+			<td><button onclick="setWallToGrey()">Graustufen</button></td>
+			<td><button onclick="setWallDarker()">Dunkler</button></td>
+			<td><button onclick="setWallLighter()">Heller</button></td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><code id="wallRedValue"></code></td>
+			<td><code id="wallGreenValue"></code></td>
+			<td><code id="wallBlueValue"></code></td>
+			<td><code id="wallHex"></code></td>
+			<td></td>
+		</tr>		
+		<tr>
+			<th>Fenster</th>
+			<td><input oninput="changeWindowColorRed(this.value)" onchange="changeWindowColorRed(this.value)"
+					type="range" id="slideWindowRed" min="0" max="255"></td>
+			<td><input oninput="changeWindowColorGreen(this.value)" onchange="changeWindowColorGreen(this.value)"
+					type="range" id="slideWindowGreen" name="slideRed" min="0" max="255"></td>
+			<td><input oninput="changeWindowColorBlue(this.value)" onchange="changeWindowColorBlue(this.value)"
+					type="range" id="slideWindowBlue" name="slideRed" min="0" max="255"></td>
+			<td></td>
+			<td><button onclick="setWindowToGrey()">Graustufen</button></td>
+			<td><button onclick="setWindowDarker()">Dunkler</button></td>
+			<td><button onclick="setWindowLighter()">Heller</button></td>
+
+		</tr>
+		<tr>
+			<th></th>
+			<td><code id="windowRedValue"></code></td>
+			<td><code id="windowGreenValue"></code></td>
+			<td><code id="windowBlueValue"></code></td>
+			<td><code id="windowHex"></code></td>
+			<td></td>
+		</tr>		
+	</table>
+	</p>
+	<p>
+	<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<mask id="streetwindowmask">
+				<image href="StreetWindowFrames.svg" width="800" height="450" />
+			</mask>
+			<mask id="streetwallmask">
+				<image href="StreetWall.svg" width="800" height="450" />
+			</mask>
+		</defs>
+		<image href="StreetOriginal.png" width="800" height="450" />
+		<rect id="streetwindowcolor" x="0" y="0" width="800" height="450" fill="red" mask="url(#streetwindowmask)" />
+		<rect id="streetwallcolor" x="0" y="0" width="800" height="450" fill="green" mask="url(#streetwallmask)" />
+		<image href="StreetShadows.png" width="800" height="450" />
+		<image href="StreetTree.png" width="800" height="450" />
+	</svg>
+	</p>
+	<p>
+	<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<mask id="gardenwindowmask">
+				<image href="GardenWindowFrames.svg" width="800" height="450" />
+			</mask>
+			<mask id="gardenwallmask">
+				<image href="GardenWall.svg" width="800" height="450" />
+			</mask>
+		</defs>
+		<image href="GardenOriginal.png" width="800" height="450" />
+		<rect id="gardenwindowcolor" x="0" y="0" width="800" height="450" fill="red" mask="url(#gardenwindowmask)" />
+		<rect id="gardenwallcolor" x="0" y="0" width="800" height="450" fill="green" mask="url(#gardenwallmask)" />
+		<image href="GardenShadows.png" width="800" height="450" />
+		<image href="GardenBushes.png" width="800" height="450" />
+	</svg>
+	</p>
+
+	<script>
+		let step = 5;
+
+		let wallColorRed = 0;
+		let wallColorGreen = 0;
+		let wallColorBlue = 0;
+		updateWallColor();
+
+		function updateWallColor() {
+			wallColorNewValue = "rgb(" + wallColorRed + "," + wallColorGreen + "," + wallColorBlue + ")";
+			document.getElementById("streetwallcolor").style.fill = wallColorNewValue;
+			document.getElementById("gardenwallcolor").style.fill = wallColorNewValue;
+			document.getElementById("slideWallRed").value = wallColorRed;
+			document.getElementById("slideWallGreen").value = wallColorGreen;
+			document.getElementById("slideWallBlue").value = wallColorBlue;		
+			
+			document.getElementById("wallRedValue").innerHTML = wallColorRed;
+			document.getElementById("wallGreenValue").innerHTML = wallColorGreen;
+			document.getElementById("wallBlueValue").innerHTML = wallColorBlue;		
+			document.getElementById("wallHex").innerHTML = "#"+colorToHex(wallColorRed)+colorToHex(wallColorGreen)+colorToHex(wallColorBlue);
+		}
+		function changeWallColorRed(value) {
+			wallColorRed = Number(value);
+			updateWallColor();
+		}
+		function changeWallColorGreen(value) {
+			wallColorGreen = Number(value);
+			updateWallColor();
+		}
+		function changeWallColorBlue(value) {
+			wallColorBlue = Number(value);
+			updateWallColor();
+		}
+
+		function setWallToGrey() {
+			let greyWall = Math.round((wallColorRed + wallColorGreen + wallColorBlue) / 3);
+			wallColorRed = greyWall;
+			wallColorGreen = greyWall;
+			wallColorBlue = greyWall;
+			updateWallColor();
+		}	
+
+		function setWallDarker() {
+			wallColorRed = Math.max(wallColorRed - step, 0);
+			wallColorGreen = Math.max(wallColorGreen - step, 0);
+			wallColorBlue = Math.max(wallColorBlue - step, 0);
+			updateWallColor();
+		}		
+		
+		function setWallLighter() {
+			wallColorRed = Math.min(wallColorRed + step, 255);
+			wallColorGreen = Math.min(wallColorGreen + step, 255);
+			wallColorBlue = Math.min(wallColorBlue + step, 255);
+			updateWallColor();
+		}			
+
+		let windowColorRed = 0;
+		let windowColorGreen = 0;
+		let windowColorBlue = 0;
+		let greyWindow = 0;
+		updateWindowColor();
+
+		function colorToHex(value){
+			var ret = Number(value).toString(16).toUpperCase();
+			if (ret.length == 1){
+				ret = "0"+ret;
+			}
+			return ret;
+		}
+
+		function updateWindowColor() {
+			let windowColorNewValue = "rgb(" + windowColorRed + "," + windowColorGreen + "," + windowColorBlue + ")";
+			document.getElementById("streetwindowcolor").style.fill = windowColorNewValue;
+			document.getElementById("gardenwindowcolor").style.fill = windowColorNewValue;
+
+			document.getElementById("slideWindowRed").value = windowColorRed;
+			document.getElementById("slideWindowGreen").value = windowColorGreen;
+			document.getElementById("slideWindowBlue").value = windowColorBlue;
+
+			document.getElementById("windowRedValue").innerHTML = windowColorRed;
+			document.getElementById("windowGreenValue").innerHTML = windowColorGreen;
+			document.getElementById("windowBlueValue").innerHTML = windowColorBlue;
+			document.getElementById("windowHex").innerHTML = "#"+colorToHex(windowColorRed)+colorToHex(windowColorGreen)+colorToHex(windowColorBlue);
+		}
+		function changeWindowColorRed(value) {
+			windowColorRed = Number(value);
+			updateWindowColor();
+		}
+		function changeWindowColorGreen(value) {
+			windowColorGreen = Number(value);
+			updateWindowColor();
+		}
+		function changeWindowColorBlue(value) {
+			windowColorBlue = Number(value);
+			updateWindowColor();
+		}
+		function setWindowToGrey() {
+			greyWindow = Math.round((windowColorRed + windowColorGreen + windowColorBlue) / 3);
+			windowColorRed = greyWindow;
+			windowColorGreen = greyWindow;
+			windowColorBlue = greyWindow;
+			updateWindowColor();
+		}
+
+		function setWindowDarker() {
+			windowColorRed = Math.max(windowColorRed - step, 0);
+			windowColorGreen = Math.max(windowColorGreen - step, 0);
+			windowColorBlue = Math.max(windowColorBlue - step, 0);
+			updateWindowColor();
+		}		
+		
+		function setWindowLighter() {
+			windowColorRed = Math.min(windowColorRed + step, 255);
+			windowColorGreen = Math.min(windowColorGreen + step, 255);
+			windowColorBlue = Math.min(windowColorBlue + step, 255);
+			updateWindowColor();
+		}			
+
+	</script>
 </body>
+
 </html>
