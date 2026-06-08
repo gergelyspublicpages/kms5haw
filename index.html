@@ -5,60 +5,117 @@ table, th, td {
   border: 1px solid lightgray;
   border-collapse: collapse;
 }
+
+.redSlider {
+  appearance: none;
+  background: transparent;
+}
+
+.redSlider::-webkit-slider-runnable-track {
+  height: 8px;
+  background: red;
+  border-radius: 4px;
+}
+
+.redSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #CC0000;
+  border-radius: 30%;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+.greenSlider {
+  appearance: none;
+  background: transparent;
+}
+
+.greenSlider::-webkit-slider-runnable-track {
+  height: 8px;
+  background: green;
+  border-radius: 4px;
+}
+
+.greenSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #00CC00;
+  border-radius: 30%;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+.blueSlider {
+  appearance: none;
+  background: transparent;
+}
+
+.blueSlider::-webkit-slider-runnable-track {
+  height: 8px;
+  background: blue;
+  border-radius: 4px;
+}
+
+.blueSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #0000CC;
+  border-radius: 30%;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+
+
 </style>
 <body>
 	<p>
 	<table>
 		<tr>
-			<th></th>
-			<th>Rot</th>
-			<th>Grün</th>
-			<th>Blau</th>
-			<th>code</th>
-			<th></th>
-		</tr>
-		<tr>
 			<th>Wand</th>
-			<td><input oninput="changeWallColorRed(this.value)" onchange="changeWallColorRed(this.value)" type="range"
+			<td><input class="redSlider" oninput="changeWallColorRed(this.value)" onchange="changeWallColorRed(this.value)" type="range"
 					id="slideWallRed" min="0" max="255"></td>
-			<td><input oninput="changeWallColorGreen(this.value)" onchange="changeWallColorGreen(this.value)"
+			<td><input class="greenSlider" oninput="changeWallColorGreen(this.value)" onchange="changeWallColorGreen(this.value)"
 					type="range" id="slideWallGreen" min="0" max="255"></td>
-			<td><input oninput="changeWallColorBlue(this.value)" onchange="changeWallColorBlue(this.value)" type="range"
+			<td><input class="blueSlider" oninput="changeWallColorBlue(this.value)" onchange="changeWallColorBlue(this.value)" type="range"
 					id="slideWallBlue" min="0" max="255"></td>
-			<td></td>
+			<td id="wallColor"></td>
 			<td><button onclick="setWallToGrey()">Graustufen</button></td>
 			<td><button onclick="setWallDarker()">Dunkler</button></td>
 			<td><button onclick="setWallLighter()">Heller</button></td>
+			<td><button onclick="originalWallColor()">Original</button></td>
 		</tr>
 		<tr>
 			<th></th>
-			<td><code id="wallRedValue"></code></td>
-			<td><code id="wallGreenValue"></code></td>
-			<td><code id="wallBlueValue"></code></td>
-			<td><code id="wallHex"></code></td>
-			<td></td>
+			<td align="center"><code id="wallRedValue"></code></td>
+			<td align="center"><code id="wallGreenValue"></code></td>
+			<td align="center"><code id="wallBlueValue"></code></td>
+			<td align="center"><code id="wallHex"></code></td>
 		</tr>		
 		<tr>
 			<th>Fenster</th>
-			<td><input oninput="changeWindowColorRed(this.value)" onchange="changeWindowColorRed(this.value)"
+			<td><input class="redSlider" oninput="changeWindowColorRed(this.value)" onchange="changeWindowColorRed(this.value)"
 					type="range" id="slideWindowRed" min="0" max="255"></td>
-			<td><input oninput="changeWindowColorGreen(this.value)" onchange="changeWindowColorGreen(this.value)"
+			<td><input class="greenSlider" oninput="changeWindowColorGreen(this.value)" onchange="changeWindowColorGreen(this.value)"
 					type="range" id="slideWindowGreen" name="slideRed" min="0" max="255"></td>
-			<td><input oninput="changeWindowColorBlue(this.value)" onchange="changeWindowColorBlue(this.value)"
+			<td><input class="blueSlider" oninput="changeWindowColorBlue(this.value)" onchange="changeWindowColorBlue(this.value)"
 					type="range" id="slideWindowBlue" name="slideRed" min="0" max="255"></td>
-			<td></td>
+			<td id="windowColor"></td>
 			<td><button onclick="setWindowToGrey()">Graustufen</button></td>
 			<td><button onclick="setWindowDarker()">Dunkler</button></td>
 			<td><button onclick="setWindowLighter()">Heller</button></td>
-
+			<td><button onclick="originalWindowColor()">Original</button></td>
 		</tr>
 		<tr>
 			<th></th>
-			<td><code id="windowRedValue"></code></td>
-			<td><code id="windowGreenValue"></code></td>
-			<td><code id="windowBlueValue"></code></td>
-			<td><code id="windowHex"></code></td>
-			<td></td>
+			<td align="center"><code id="windowRedValue"></code></td>
+			<td align="center"><code id="windowGreenValue"></code></td>
+			<td align="center"><code id="windowBlueValue"></code></td>
+			<td align="center"><code id="windowHex"></code></td>
 		</tr>		
 	</table>
 	</p>
@@ -103,12 +160,21 @@ table, th, td {
 		let wallColorRed = 0;
 		let wallColorGreen = 0;
 		let wallColorBlue = 0;
-		updateWallColor();
+        originalWallColor();
+
+        function originalWallColor(){
+      		wallColorRed = 0xb5;
+        	wallColorGreen = 0x77;
+		    wallColorBlue = 0x60;
+    		updateWallColor();
+        }
 
 		function updateWallColor() {
 			wallColorNewValue = "rgb(" + wallColorRed + "," + wallColorGreen + "," + wallColorBlue + ")";
 			document.getElementById("streetwallcolor").style.fill = wallColorNewValue;
 			document.getElementById("gardenwallcolor").style.fill = wallColorNewValue;
+            document.getElementById("wallColor").style.background = wallColorNewValue;
+
 			document.getElementById("slideWallRed").value = wallColorRed;
 			document.getElementById("slideWallGreen").value = wallColorGreen;
 			document.getElementById("slideWallBlue").value = wallColorBlue;		
@@ -157,7 +223,15 @@ table, th, td {
 		let windowColorGreen = 0;
 		let windowColorBlue = 0;
 		let greyWindow = 0;
-		updateWindowColor();
+
+        originalWindowColor();
+
+        function originalWindowColor(){
+      		windowColorRed = 0xb4;
+        	windowColorGreen = 0xb7;
+		    windowColorBlue = 0xbe;
+    		updateWindowColor();
+        }
 
 		function colorToHex(value){
 			var ret = Number(value).toString(16).toUpperCase();
@@ -171,6 +245,7 @@ table, th, td {
 			let windowColorNewValue = "rgb(" + windowColorRed + "," + windowColorGreen + "," + windowColorBlue + ")";
 			document.getElementById("streetwindowcolor").style.fill = windowColorNewValue;
 			document.getElementById("gardenwindowcolor").style.fill = windowColorNewValue;
+            document.getElementById("windowColor").style.background = windowColorNewValue;
 
 			document.getElementById("slideWindowRed").value = windowColorRed;
 			document.getElementById("slideWindowGreen").value = windowColorGreen;
