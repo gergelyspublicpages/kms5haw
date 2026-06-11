@@ -51,8 +51,6 @@ table, th, td {
   cursor: pointer;
 }
 
-
-
 </style>
 <body>
 	<p>
@@ -65,8 +63,8 @@ table, th, td {
 					type="range" id="slideWallGreen" min="0" max="255"></td>
 			<td><input class="blueSlider" oninput="changeWallColorBlue(this.value)" onchange="changeWallColorBlue(this.value)" type="range"
 					id="slideWallBlue" min="0" max="255"></td>
-			<td id="wallColor"></td>
 			<td><button onclick="setWallToGrey()">Graustufen</button></td>
+			<td><select id="selectWallColor" style="background-color: white; width: 100px"></select></td>
 			<td><button onclick="setWallDarker()">Dunkler</button></td>
 			<td><button onclick="setWallLighter()">Heller</button></td>
 			<td><button onclick="originalWallColor()">Original</button></td>
@@ -86,8 +84,8 @@ table, th, td {
 					type="range" id="slideWindowGreen" name="slideRed" min="0" max="255"></td>
 			<td><input class="blueSlider" oninput="changeWindowColorBlue(this.value)" onchange="changeWindowColorBlue(this.value)"
 					type="range" id="slideWindowBlue" name="slideRed" min="0" max="255"></td>
-			<td id="windowColor"></td>
 			<td><button onclick="setWindowToGrey()">Graustufen</button></td>
+			<td><select id="selectWindowColor" style="background-color: white; width: 100px"></select></td>
 			<td><button onclick="setWindowDarker()">Dunkler</button></td>
 			<td><button onclick="setWindowLighter()">Heller</button></td>
 			<td><button onclick="originalWindowColor()">Original</button></td>
@@ -142,7 +140,96 @@ table, th, td {
 		let wallColorRed = 0;
 		let wallColorGreen = 0;
 		let wallColorBlue = 0;
+		const predefinedWallColors = [
+			"a3a3a2",
+			"b2b9b9",
+			"b7ad9a",
+			"b9b9bd",
+			"c8d3c8",
+			"a9abac",
+			"e1d1b1",
+			"e0e0e0",
+
+			"f4edda",
+			"f6e9c6",
+			"f7eec3",
+			"f8eab9",			
+			"f4edda",			
+			"f5eacc",			
+			"f5e7ba",			
+			"f6e4a6",			
+			"e3dfd4",			
+			"efe8ce",			
+			"efe1be",			
+			"f2dea3",			
+			"fbdc81",			
+			"d8d8d0",			
+			"e7dfc8",			
+			"e5d3a1",
+			"edd492",
+			"f8d26f",
+
+			"f0dfd5",
+			"f4e1da",
+			"fbdfdb",
+			"fed6ce",
+			"e9d1cd",
+			"eecdc6",
+			"fac4ba",
+
+			"e4e9e3",
+			"e5ede2",
+			"e4f2e1",
+			"dceadd",
+			"dceadd",
+			"d9ded8",
+			"dbe5da",
+			"cee9d8",
+			"cfe5d9",
+			"b3edd7",
+
+			"dee7ee",
+			"ddebee",
+			"d7e5e6",
+			"d4dee8",
+			"d5e6ed",
+			"cae5ec",
+			"ccd6df",
+			"c0d3da",
+			"afd5ea",
+
+			"edeee8",
+			"eaebe5",
+			"e2e3de",
+			"d6d8d5",
+			"cdcfcc",
+			"c5c7c4",
+			"babcb9",
+			"b3b3b3",
+			"a3a3a3",
+		];
+
+		fillWallSelect();
         originalWallColor();
+
+		function fillWallSelect(){
+			var elementSelectWallColor = document.getElementById("selectWallColor");
+			for (let i = 0; i < predefinedWallColors.length; i++){
+				var option = document.createElement("option");
+				option.style="background-color: #" + predefinedWallColors[i];
+				elementSelectWallColor.add(option);
+			}
+			elementSelectWallColor.selectedIndex = -1;
+
+			elementSelectWallColor.addEventListener("change", (event) => {
+				var i = elementSelectWallColor.selectedIndex;
+				wallColorRed = Number("0x"+predefinedWallColors[i].substring(0,2));
+				wallColorGreen = Number("0x"+predefinedWallColors[i].substring(2,4));
+				wallColorBlue = Number("0x"+predefinedWallColors[i].substring(4,6));
+				updateWallColor();
+				elementSelectWallColor.selectedIndex = -1;
+			});
+		}
 
         function originalWallColor(){
       		wallColorRed = 0xb5;
@@ -155,7 +242,7 @@ table, th, td {
 			wallColorNewValue = "rgb(" + wallColorRed + "," + wallColorGreen + "," + wallColorBlue + ")";
 			document.getElementById("streetwallcolor").style.fill = wallColorNewValue;
 			document.getElementById("gardenwallcolor").style.fill = wallColorNewValue;
-            document.getElementById("wallColor").style.background = wallColorNewValue;
+            document.getElementById("selectWallColor").style.background = wallColorNewValue;
 
 			document.getElementById("slideWallRed").value = wallColorRed;
 			document.getElementById("slideWallGreen").value = wallColorGreen;
@@ -206,7 +293,30 @@ table, th, td {
 		let windowColorBlue = 0;
 		let greyWindow = 0;
 
+		const predefinedWindowColors = predefinedWallColors;
+
+		fillWindowSelect();
         originalWindowColor();
+
+		function fillWindowSelect(){
+			var elementSelectWindowColor = document.getElementById("selectWindowColor");
+			for (let i = 0; i < predefinedWindowColors.length; i++){
+				var option = document.createElement("option");
+				option.style="background-color: #" + predefinedWindowColors[i];
+				elementSelectWindowColor.add(option);
+			}
+			elementSelectWindowColor.selectedIndex = -1;
+
+			elementSelectWindowColor.addEventListener("change", (event) => {
+				var i = elementSelectWindowColor.selectedIndex;
+				windowColorRed = Number("0x"+predefinedWindowColors[i].substring(0,2));
+				windowColorGreen = Number("0x"+predefinedWindowColors[i].substring(2,4));
+				windowColorBlue = Number("0x"+predefinedWindowColors[i].substring(4,6));
+				updateWindowColor();
+				elementSelectWindowColor.selectedIndex = -1;
+			});
+		}
+		
 
         function originalWindowColor(){
       		windowColorRed = 0xb4;
@@ -227,7 +337,7 @@ table, th, td {
 			let windowColorNewValue = "rgb(" + windowColorRed + "," + windowColorGreen + "," + windowColorBlue + ")";
 			document.getElementById("streetwindowcolor").style.fill = windowColorNewValue;
 			document.getElementById("gardenwindowcolor").style.fill = windowColorNewValue;
-            document.getElementById("windowColor").style.background = windowColorNewValue;
+            document.getElementById("selectWindowColor").style.background = windowColorNewValue;
 
 			document.getElementById("slideWindowRed").value = windowColorRed;
 			document.getElementById("slideWindowGreen").value = windowColorGreen;
