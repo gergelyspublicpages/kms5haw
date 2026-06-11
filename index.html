@@ -217,6 +217,7 @@ table, th, td {
 			for (let i = 0; i < predefinedWallColors.length; i++){
 				var option = document.createElement("option");
 				option.style="background-color: #" + predefinedWallColors[i];
+				option.text="#" + predefinedWallColors[i];
 				elementSelectWallColor.add(option);
 			}
 			elementSelectWallColor.selectedIndex = -1;
@@ -303,6 +304,7 @@ table, th, td {
 			for (let i = 0; i < predefinedWindowColors.length; i++){
 				var option = document.createElement("option");
 				option.style="background-color: #" + predefinedWindowColors[i];
+				option.text="#" + predefinedWindowColors[i];
 				elementSelectWindowColor.add(option);
 			}
 			elementSelectWindowColor.selectedIndex = -1;
