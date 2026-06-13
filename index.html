@@ -7,51 +7,6 @@
 		border: 1px solid lightgray;
 		border-collapse: collapse;
 	}
-
-	.redSlider {
-		appearance: none;
-		background: red;
-	}
-
-	.redSlider::-webkit-slider-thumb {
-		appearance: none;
-		width: 20px;
-		height: 20px;
-		background: white;
-		border-radius: 50%;
-		margin-top: 0px;
-		cursor: pointer;
-	}
-
-	.greenSlider {
-		appearance: none;
-		background: green;
-	}
-
-	.greenSlider::-webkit-slider-thumb {
-		appearance: none;
-		width: 20px;
-		height: 20px;
-		background: white;
-		border-radius: 50%;
-		margin-top: 0px;
-		cursor: pointer;
-	}
-
-	.blueSlider {
-		appearance: none;
-		background: blue;
-	}
-
-	.blueSlider::-webkit-slider-thumb {
-		appearance: none;
-		width: 20px;
-		height: 20px;
-		background: white;
-		border-radius: 50%;
-		margin-top: 0px;
-		cursor: pointer;
-	}
 </style>
 
 <body>
@@ -59,23 +14,46 @@
 	<table>
 		<tr>
 			<th style="width: 80px;">Wand</th>
-			<td><input class="redSlider" oninput="changeWallColorRed(this.value)"
-					onchange="changeWallColorRed(this.value)" type="range" id="slideWallRed" min="0" max="255"></td>
-			<td><input class="greenSlider" oninput="changeWallColorGreen(this.value)"
-					onchange="changeWallColorGreen(this.value)" type="range" id="slideWallGreen" min="0" max="255"></td>
-			<td><input class="blueSlider" oninput="changeWallColorBlue(this.value)"
-					onchange="changeWallColorBlue(this.value)" type="range" id="slideWallBlue" min="0" max="255"></td>
-			<td><button onclick="setWallToGrey()">Grau</button></td>
-			<td><button id="setWallColor" onclick="togglePalette('paletteWall')" style="width: 80px; height: 20px; ">Palette</button></td>
-			<td><button onclick="setWallDarker()">dunkler</button></td>
-			<td><button onclick="setWallLighter()">heller</button></td>
-			<td><button onclick="originalWallColor()">Original</button></td>
-		</tr>
-		<tr>
-			<th></th>
-			<td align="center"><code id="wallRedValue"></code></td>
-			<td align="center"><code id="wallGreenValue"></code></td>
-			<td align="center"><code id="wallBlueValue"></code></td>
+			<td>
+				<image src="hue.webp" width="30" height="30" />
+			</td>
+			<td>
+				<input style="
+					appearance: none; 
+					background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff,#0000ff,#ff00ff,#ff0000);
+					width: 200px;
+					height: 30px;
+				" oninput="changeWallColorHue(this.value)" onchange="changeWallColorHue(this.value)" type="range" id="slideWallHue"
+					min="0" max="360">
+			</td>
+			<td>
+				<image src="brightness.webp" width="30" height="30" />
+			</td>
+			<td>
+
+				<input style="
+						appearance: none; 
+						background: linear-gradient(90deg,black, white);
+						width: 100;
+						height: 30px;
+					" oninput="changeWallColorBrightness(this.value)" onchange="changeWallColorBrightness(this.value)" type="range"
+					id="slideWallBrightness" min="0" max="100">
+			</td>
+			<td>
+				<image src="saturation.webp" width="30" height="30" />
+			</td>
+			<td>
+
+				<input style="
+					appearance: none; 
+					background: linear-gradient(90deg, #ffffff, #ff0000);
+					height: 30px;
+					" oninput="changeWallColorSaturation(this.value)" onchange="changeWallColorSaturation(this.value)" type="range"
+					id="slideWallSaturation" min="0" max="100">
+			</td>
+			<td><button id="setWallColor" onclick="togglePalette('paletteWall')"
+					style="width: 80px; height: 30px;">Palette</button></td>
+			<td><button onclick="originalWallColor()" style="width: 80px; height: 30px;">Original</button></td>
 			<td align="center"><code id="wallHex"></code></td>
 		</tr>
 	</table>
@@ -83,30 +61,49 @@
 	<table>
 		<tr>
 			<th style="width: 80px;">Fenster</th>
-			<td><input class="redSlider" oninput="changeWindowColorRed(this.value)"
-					onchange="changeWindowColorRed(this.value)" type="range" id="slideWindowRed" min="0" max="255"></td>
-			<td><input class="greenSlider" oninput="changeWindowColorGreen(this.value)"
-					onchange="changeWindowColorGreen(this.value)" type="range" id="slideWindowGreen" name="slideRed"
-					min="0" max="255"></td>
-			<td><input class="blueSlider" oninput="changeWindowColorBlue(this.value)"
-					onchange="changeWindowColorBlue(this.value)" type="range" id="slideWindowBlue" name="slideRed"
-					min="0" max="255"></td>
-			<td><button onclick="setWindowToGrey()">Grau</button></td>
-			<td><button id="setWindowColor" onclick="togglePalette('paletteWindow')" style="width: 80px; height: 20px; ">Palette</button></td>
-			<td><button onclick="setWindowDarker()">dunkler</button></td>
-			<td><button onclick="setWindowLighter()">heller</button></td>
-			<td><button onclick="originalWindowColor()">Original</button></td>
-		</tr>
-		<tr>
-			<th></th>
-			<td align="center"><code id="windowRedValue"></code></td>
-			<td align="center"><code id="windowGreenValue"></code></td>
-			<td align="center"><code id="windowBlueValue"></code></td>
+			<td>
+				<image src="hue.webp" width="30" height="30" />
+			</td>
+			<td>
+				<input style="
+					appearance: none; 
+					background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff,#0000ff,#ff00ff,#ff0000);
+					width: 200px;
+					height: 30px;
+				" oninput="changeWindowColorHue(this.value)" onchange="changeWindowColorHue(this.value)" type="range"
+					id="slideWindowHue" min="0" max="360">
+			</td>
+			<td>
+				<image src="brightness.webp" width="30" height="30" />
+			</td>
+			<td>
+				<input style="
+						appearance: none; 
+						background: linear-gradient(90deg,black, white);
+						width: 100;
+						height: 30px;
+					" oninput="changeWindowColorBrightness(this.value)" onchange="changeWindowColorBrightness(this.value)"
+					type="range" id="slideWindowBrightness" min="0" max="100">
+			</td>
+			<td>
+				<image src="saturation.webp" width="30" height="30" />
+			</td>
+			<td>
+				<input style="
+					appearance: none; 
+					background: linear-gradient(90deg, #ffffff, #ff0000);
+					height: 30px;
+					" oninput="changeWindowColorSaturation(this.value)" onchange="changeWindowColorSaturation(this.value)"
+					type="range" id="slideWindowSaturation" min="0" max="100">
+			</td>
+			<td><button id="setWindowColor" onclick="togglePalette('paletteWindow')"
+					style="width: 80px; height: 30px; ">Palette</button></td>
+			<td><button onclick="originalWindowColor()" style="width: 80px; height: 30px;">Original</button></td>
 			<td align="center"><code id="windowHex"></code></td>
 		</tr>
 	</table>
 	<table id="paletteWindow" />
-	<table/> 
+	<table />
 	</p>
 	<p align="center">
 		<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
@@ -146,11 +143,116 @@
 	</p>
 
 	<script>
-		let step = 5;
+		class Rgb {
+			constructor(r, g, b) {
+				this.r = r;
+				this.g = g;
+				this.b = b;
+			}
+			set(rgb) {
+				this.r = rgb.r;
+				this.g = rgb.g;
+				this.b = rgb.b;
+			}
+		}
 
-		let wallColorRed = 0;
-		let wallColorGreen = 0;
-		let wallColorBlue = 0;
+		class Hsv {
+			constructor(h, s, v) {
+				this.h = h;
+				this.s = s;
+				this.v = v;
+			}
+		}
+
+		function convertRgbToHsv(rgb) {
+			r = rgb.r / 255;
+			g = rgb.g / 255;
+			b = rgb.b / 255;
+			max = Math.max(r, g, b);
+			min = Math.min(r, g, b);
+
+			hsv = new Hsv(0, 0, 0);
+
+			if (max == min) {
+				hsv.h = 0;
+			}
+			else if (r == max) {
+				hsv.h = 60 * (g - b) / (max - min);
+			}
+			else if (g == max) {
+				hsv.h = 60 * (2 + (g - b) / (max - min));
+			}
+			else {
+				hsv.h = 60 * (4 + (g - b) / (max - min));
+			}
+			if (hsv.h < 0) {
+				hsv.h += 360;
+			}
+
+			if (max == min) {
+				hsv.s = 0;
+			}
+			else {
+				hsv.s = 100 * (max - min) / max;
+			}
+
+			hsv.v = max * 100;
+
+			hsv.h = Math.floor(hsv.h);
+			hsv.v = Math.floor(hsv.v);
+			hsv.s = Math.floor(hsv.s);
+
+			return hsv;
+		}
+
+		function convertHsvToRgb(hsv) {
+			s = hsv.s / 100;
+			v = hsv.v / 100;
+			hi = Math.floor(hsv.h / 60);
+			f = hsv.h / 60 - hi;
+			p = v * (1 - s);
+			q = v * (1 - s * f);
+			t = v * (1 - s * (1 - f));
+			switch (hi) {
+				case 0:
+				case 6:
+					return rgbFromNormed(v, t, p);
+					break;
+				case 1:
+					return rgbFromNormed(q, v, p);
+					break;
+				case 2:
+					return rgbFromNormed(p, v, t);
+					break;
+				case 3:
+					return rgbFromNormed(p, q, v);
+					break;
+				case 4:
+					return rgbFromNormed(t, p, v);
+					break;
+				case 5:
+					return rgbFromNormed(v, p, q);
+					break;
+			}
+			return rgb;
+		}
+
+		function rgbFromNormed(r, g, b) {
+			retRgb = new Rgb(0, 0, 0);
+			retRgb.r = Math.floor(r * 255);
+			retRgb.g = Math.floor(g * 255);
+			retRgb.b = Math.floor(b * 255);
+			return retRgb;
+		}
+
+		function colorToHex(value) {
+			var ret = Number(value).toString(16).toUpperCase();
+			if (ret.length == 1) {
+				ret = "0" + ret;
+			}
+			return ret;
+		}
+
 		const paletteColors = [
 			[
 				"a3a3a2",
@@ -232,10 +334,18 @@
 			],
 		];
 
-		originalWallColor();
-		initializePalette("paletteWall");
+		function togglePalette(paletteName) {
+			let palette = document.getElementById(paletteName);
+			if (palette.style.display == "none") {
+				palette.style.display = "table";
+			}
+			else {
+				palette.style.display = "none";
+			}
+		}
 
-		function initializePalette(paletteName){
+
+		function initializePalette(paletteName) {
 			document.getElementById(paletteName).style.display = "none";
 			fillPalette(paletteName);
 		}
@@ -251,10 +361,10 @@
 					button.style.width = "80px";
 					button.style.height = "25px";
 					button.onclick = function () {
-						if (paletteName == "paletteWall"){
+						if (paletteName == "paletteWall") {
 							setWallColorFromHexString(paletteColors[i][j]);
 						}
-						else{
+						else {
 							setWindowColorFromHexString(paletteColors[i][j]);
 						}
 						document.getElementById(paletteName).style.display = "none";
@@ -266,159 +376,128 @@
 			}
 		}
 
+		wallColorRgb = new Rgb(0, 0, 0);
+		wallColorHsv = new Hsv(0, 0, 0);
+
+		originalWallColor();
+		initializePalette("paletteWall");
+
+		function changeWallColorHue(value) {
+			wallColorHsv.h = Number(value);
+			wallColorRgb = convertHsvToRgb(wallColorHsv);
+			updateWallColor(false);
+		}
+
+		function changeWallColorSaturation(value) {
+			wallColorHsv.s = Number(value);
+			wallColorRgb = convertHsvToRgb(wallColorHsv);
+			updateWallColor(false);
+		}
+
+		function changeWallColorBrightness(value) {
+			wallColorHsv.v = Number(value);
+			wallColorRgb = convertHsvToRgb(wallColorHsv);
+			updateWallColor(false);
+		}
+
 		function setWallColorFromHexString(hexString) {
-			wallColorRed = Number("0x" + hexString.substring(0, 2));
-			wallColorGreen = Number("0x" + hexString.substring(2, 4));
-			wallColorBlue = Number("0x" + hexString.substring(4, 6));
+			wallColorRgb.r = Number("0x" + hexString.substring(0, 2));
+			wallColorRgb.g = Number("0x" + hexString.substring(2, 4));
+			wallColorRgb.b = Number("0x" + hexString.substring(4, 6));
 			updateWallColor();
-		}
-
-		function setWindowColorFromHexString(hexString) {
-			windowColorRed = Number("0x" + hexString.substring(0, 2));
-			windowColorGreen = Number("0x" + hexString.substring(2, 4));
-			windowColorBlue = Number("0x" + hexString.substring(4, 6));
-			updateWindowColor();
-		}
-
-		function togglePalette(paletteName) {
-			let palette = document.getElementById(paletteName);
-			if (palette.style.display == "none") {
-				palette.style.display = "table";
-			}
-			else {
-				palette.style.display = "none";
-			}
 		}
 
 		function originalWallColor() {
-			wallColorRed = 0xb5;
-			wallColorGreen = 0x77;
-			wallColorBlue = 0x60;
+			wallColorRgb.r = 0xb5;
+			wallColorRgb.g = 0x77;
+			wallColorRgb.b = 0x60;
 			updateWallColor();
 		}
 
-		function updateWallColor() {
-			wallColorNewValue = "rgb(" + wallColorRed + "," + wallColorGreen + "," + wallColorBlue + ")";
+		function updateWallColor(updateHsv = true) {
+			wallColorNewValue = "rgb(" + wallColorRgb.r + "," + wallColorRgb.g + "," + wallColorRgb.b + ")";
+
 			document.getElementById("streetwallcolor").style.fill = wallColorNewValue;
 			document.getElementById("gardenwallcolor").style.fill = wallColorNewValue;
 			document.getElementById("setWallColor").style.backgroundColor = wallColorNewValue;
 
-			document.getElementById("slideWallRed").value = wallColorRed;
-			document.getElementById("slideWallGreen").value = wallColorGreen;
-			document.getElementById("slideWallBlue").value = wallColorBlue;
+			document.getElementById("wallHex").innerHTML = "#" + colorToHex(wallColorRgb.r) + colorToHex(wallColorRgb.g) + colorToHex(wallColorRgb.b);
 
-			document.getElementById("wallRedValue").innerHTML = wallColorRed;
-			document.getElementById("wallGreenValue").innerHTML = wallColorGreen;
-			document.getElementById("wallBlueValue").innerHTML = wallColorBlue;
-			document.getElementById("wallHex").innerHTML = "#" + colorToHex(wallColorRed) + colorToHex(wallColorGreen) + colorToHex(wallColorBlue);
-		}
-		function changeWallColorRed(value) {
-			wallColorRed = Number(value);
-			updateWallColor();
-		}
-		function changeWallColorGreen(value) {
-			wallColorGreen = Number(value);
-			updateWallColor();
-		}
-		function changeWallColorBlue(value) {
-			wallColorBlue = Number(value);
-			updateWallColor();
+			if (updateHsv) {
+				wallColorHsv = convertRgbToHsv(wallColorRgb);
+				document.getElementById("slideWallHue").value = wallColorHsv.h;
+				document.getElementById("slideWallSaturation").value = wallColorHsv.s;
+				document.getElementById("slideWallBrightness").value = wallColorHsv.v;
+			}
+			tempRgbSaturationMin = convertHsvToRgb(new Hsv(wallColorHsv.h, 0, wallColorHsv.v));
+			tempRgbSaturationMax = convertHsvToRgb(new Hsv(wallColorHsv.h, 100, wallColorHsv.v));
+			document.getElementById("slideWallSaturation").style.background = "linear-gradient(90deg, #" + colorToHex(tempRgbSaturationMin.r) + colorToHex(tempRgbSaturationMin.g) + colorToHex(tempRgbSaturationMin.b) + ", #" + colorToHex(tempRgbSaturationMax.r) + colorToHex(tempRgbSaturationMax.g) + colorToHex(tempRgbSaturationMax.b) + ")";
+
+			tempRgbBrightnessMin = convertHsvToRgb(new Hsv(wallColorHsv.h, wallColorHsv.v, 0));
+			tempRgbBrightnessMax = convertHsvToRgb(new Hsv(wallColorHsv.h, wallColorHsv.v, 100));
+			document.getElementById("slideWallBrightness").style.background = "linear-gradient(90deg, #" + colorToHex(tempRgbBrightnessMin.r) + colorToHex(tempRgbBrightnessMin.g) + colorToHex(tempRgbBrightnessMin.b) + ", #" + colorToHex(tempRgbBrightnessMax.r) + colorToHex(tempRgbBrightnessMax.g) + colorToHex(tempRgbBrightnessMax.b) + ")";
 		}
 
-		function setWallToGrey() {
-			let greyWall = Math.round((wallColorRed + wallColorGreen + wallColorBlue) / 3);
-			wallColorRed = greyWall;
-			wallColorGreen = greyWall;
-			wallColorBlue = greyWall;
-			updateWallColor();
-		}
-
-		function setWallDarker() {
-			wallColorRed = Math.max(wallColorRed - step, 0);
-			wallColorGreen = Math.max(wallColorGreen - step, 0);
-			wallColorBlue = Math.max(wallColorBlue - step, 0);
-			updateWallColor();
-		}
-
-		function setWallLighter() {
-			wallColorRed = Math.min(wallColorRed + step, 255);
-			wallColorGreen = Math.min(wallColorGreen + step, 255);
-			wallColorBlue = Math.min(wallColorBlue + step, 255);
-			updateWallColor();
-		}
-
-		let windowColorRed = 0;
-		let windowColorGreen = 0;
-		let windowColorBlue = 0;
-		let greyWindow = 0;
-
-		const predefinedWindowColors = paletteColors;
+		windowColorRgb = new Rgb(0, 0, 0);
+		windowColorHsv = new Hsv(0, 0, 0);
 
 		originalWindowColor();
 		initializePalette("paletteWindow");
 
-		function originalWindowColor() {
-			windowColorRed = 0xb4;
-			windowColorGreen = 0xb7;
-			windowColorBlue = 0xbe;
+		function changeWindowColorHue(value) {
+			windowColorHsv.h = Number(value);
+			windowColorRgb = convertHsvToRgb(windowColorHsv);
+			updateWindowColor(false);
+		}
+
+		function changeWindowColorSaturation(value) {
+			windowColorHsv.s = Number(value);
+			windowColorRgb = convertHsvToRgb(windowColorHsv);
+			updateWindowColor(false);
+		}
+
+		function changeWindowColorBrightness(value) {
+			windowColorHsv.v = Number(value);
+			windowColorRgb = convertHsvToRgb(windowColorHsv);
+			updateWindowColor(false);
+		}
+
+		function setWindowColorFromHexString(hexString) {
+			windowColorRgb.r = Number("0x" + hexString.substring(0, 2));
+			windowColorRgb.g = Number("0x" + hexString.substring(2, 4));
+			windowColorRgb.b = Number("0x" + hexString.substring(4, 6));
 			updateWindowColor();
 		}
 
-		function colorToHex(value) {
-			var ret = Number(value).toString(16).toUpperCase();
-			if (ret.length == 1) {
-				ret = "0" + ret;
-			}
-			return ret;
+		function originalWindowColor() {
+			windowColorRgb.r = 0xb4;
+			windowColorRgb.g = 0xb7;
+			windowColorRgb.b = 0xbe;
+			updateWindowColor();
 		}
 
-		function updateWindowColor() {
-			let windowColorNewValue = "rgb(" + windowColorRed + "," + windowColorGreen + "," + windowColorBlue + ")";
+		function updateWindowColor(updateHsv = true) {
+			windowColorNewValue = "rgb(" + windowColorRgb.r + "," + windowColorRgb.g + "," + windowColorRgb.b + ")";
+
 			document.getElementById("streetwindowcolor").style.fill = windowColorNewValue;
 			document.getElementById("gardenwindowcolor").style.fill = windowColorNewValue;
-			document.getElementById("setWindowColor").style.background = windowColorNewValue;
+			document.getElementById("setWindowColor").style.backgroundColor = windowColorNewValue;
 
-			document.getElementById("slideWindowRed").value = windowColorRed;
-			document.getElementById("slideWindowGreen").value = windowColorGreen;
-			document.getElementById("slideWindowBlue").value = windowColorBlue;
+			document.getElementById("windowHex").innerHTML = "#" + colorToHex(windowColorRgb.r) + colorToHex(windowColorRgb.g) + colorToHex(windowColorRgb.b);
 
-			document.getElementById("windowRedValue").innerHTML = windowColorRed;
-			document.getElementById("windowGreenValue").innerHTML = windowColorGreen;
-			document.getElementById("windowBlueValue").innerHTML = windowColorBlue;
-			document.getElementById("windowHex").innerHTML = "#" + colorToHex(windowColorRed) + colorToHex(windowColorGreen) + colorToHex(windowColorBlue);
-		}
-		function changeWindowColorRed(value) {
-			windowColorRed = Number(value);
-			updateWindowColor();
-		}
-		function changeWindowColorGreen(value) {
-			windowColorGreen = Number(value);
-			updateWindowColor();
-		}
-		function changeWindowColorBlue(value) {
-			windowColorBlue = Number(value);
-			updateWindowColor();
-		}
-		function setWindowToGrey() {
-			greyWindow = Math.round((windowColorRed + windowColorGreen + windowColorBlue) / 3);
-			windowColorRed = greyWindow;
-			windowColorGreen = greyWindow;
-			windowColorBlue = greyWindow;
-			updateWindowColor();
-		}
+			if (updateHsv) {
+				windowColorHsv = convertRgbToHsv(windowColorRgb);
+				document.getElementById("slideWindowHue").value = windowColorHsv.h;
+				document.getElementById("slideWindowSaturation").value = windowColorHsv.s;
+				document.getElementById("slideWindowBrightness").value = windowColorHsv.v;
+			}
+			tempRgbSaturationMin = convertHsvToRgb(new Hsv(windowColorHsv.h, 0, windowColorHsv.v));
+			tempRgbSaturationMax = convertHsvToRgb(new Hsv(windowColorHsv.h, 100, windowColorHsv.v));
+			document.getElementById("slideWindowSaturation").style.background = "linear-gradient(90deg, #" + colorToHex(tempRgbSaturationMin.r) + colorToHex(tempRgbSaturationMin.g) + colorToHex(tempRgbSaturationMin.b) + ", #" + colorToHex(tempRgbSaturationMax.r) + colorToHex(tempRgbSaturationMax.g) + colorToHex(tempRgbSaturationMax.b) + ")";
 
-		function setWindowDarker() {
-			windowColorRed = Math.max(windowColorRed - step, 0);
-			windowColorGreen = Math.max(windowColorGreen - step, 0);
-			windowColorBlue = Math.max(windowColorBlue - step, 0);
-			updateWindowColor();
-		}
-
-		function setWindowLighter() {
-			windowColorRed = Math.min(windowColorRed + step, 255);
-			windowColorGreen = Math.min(windowColorGreen + step, 255);
-			windowColorBlue = Math.min(windowColorBlue + step, 255);
-			updateWindowColor();
+			tempRgbBrightnessMin = convertHsvToRgb(new Hsv(windowColorHsv.h, windowColorHsv.v, 0));
+			tempRgbBrightnessMax = convertHsvToRgb(new Hsv(windowColorHsv.h, windowColorHsv.v, 100));
+			document.getElementById("slideWindowBrightness").style.background = "linear-gradient(90deg, #" + colorToHex(tempRgbBrightnessMin.r) + colorToHex(tempRgbBrightnessMin.g) + colorToHex(tempRgbBrightnessMin.b) + ", #" + colorToHex(tempRgbBrightnessMax.r) + colorToHex(tempRgbBrightnessMax.g) + colorToHex(tempRgbBrightnessMax.b) + ")";
 		}
 
 	</script>
